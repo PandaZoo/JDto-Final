@@ -25,6 +25,4 @@ public class FieldMetaData {
 
     private PropertyMerger valueMerger;
 
-
-
 }
