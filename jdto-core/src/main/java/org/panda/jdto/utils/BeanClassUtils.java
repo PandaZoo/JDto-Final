@@ -1,7 +1,5 @@
 package org.panda.jdto.utils;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,13 +9,12 @@ import java.util.stream.Stream;
  * User: luolibing
  * Date: 2018/3/16 11:26
  */
-@Slf4j
 public class BeanClassUtils {
 
     public static <T> Map<String, Method> getAllGetterMethod(Class<T> classType) {
         Map<String, Method> getters = new HashMap<>();
         for(Class currentClass = classType;
-            currentClass != Object.class; currentClass = classType.getSuperclass()) {
+            currentClass != Object.class; currentClass = currentClass.getSuperclass()) {
             Method[] methods = currentClass.getDeclaredMethods();
             Stream.of(methods)
                     .filter(BeanClassUtils::isGetterMethod)
@@ -38,10 +35,11 @@ public class BeanClassUtils {
     }
 
     private static boolean isGetterMethod(Method method) {
-        return true;
+        return method.getName().startsWith("get") && method.getName().length() > 3;
     }
 
     private static String getPropertyName(Method method) {
-        return null;
+        String methodName = method.getName();
+        return methodName.substring(3, 4).toLowerCase() + methodName.substring(4);
     }
 }
