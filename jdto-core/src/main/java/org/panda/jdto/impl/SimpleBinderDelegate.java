@@ -58,4 +58,8 @@ public class SimpleBinderDelegate implements DTOBinder {
     private <T> void doWritePropertyValue(FieldMetaData fieldMetaData, T result, Object propertyValue) {
 
     }
+
+    public void setBeanMetaResolver(BaseBeanMetaResolver beanMetaResolver) {
+        this.beanMetaResolver = beanMetaResolver;
+    }
 }

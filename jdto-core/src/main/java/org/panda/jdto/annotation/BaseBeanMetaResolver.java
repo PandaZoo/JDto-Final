@@ -1,11 +1,13 @@
 package org.panda.jdto.annotation;
 
+import com.google.common.collect.Lists;
 import org.panda.jdto.impl.BeanMetaData;
 import org.panda.jdto.impl.FieldMetaData;
 import org.panda.jdto.utils.BeanClassUtils;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -29,4 +31,12 @@ public abstract class BaseBeanMetaResolver {
 
     public abstract FieldMetaData buildFieldMetaData(
             String propertyName, Method method, Class classType);
+
+    FieldMetaData buildDefaultFieldMetaData(String propertyName) {
+        FieldMetaData fieldMetaData = new FieldMetaData();
+        LinkedList<String> sourceFields = Lists.newLinkedList();
+        sourceFields.add(propertyName);
+        fieldMetaData.setSourceFields(sourceFields);
+        return fieldMetaData;
+    }
 }
