@@ -21,8 +21,13 @@ public class FieldMetaData {
      */
     private Class targetType;
 
+    /**
+     * 转换器
+     */
+    private Class<? extends PropertyMerger> valueMerger;
 
-
-    private PropertyMerger valueMerger;
-
+    /**
+     * 合并参数
+     */
+    private String[] mergerParams;
 }

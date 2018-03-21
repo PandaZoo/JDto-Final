@@ -1,7 +1,10 @@
 package org.panda.jdto.utils;
 
+import org.junit.Assert;
 import org.junit.Test;
+import org.panda.jdto.entity.Person;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -13,33 +16,15 @@ public class BeanClassUtilsTest {
 
     @Test
     public void getAllGetterMethod() {
-        Map<String, Method> getterMethod = BeanClassUtils.getAllGetterMethod(Child.class);
-        getterMethod.forEach((k, v) -> {
-            System.out.println("propertyName = " + k +" , and value = " + v.getName());
-        });
+        Map<String, Method> getterMethod = BeanClassUtils.getAllGetterMethod(Person.class);
+        Assert.assertNotNull(getterMethod.get("id"));
+        Assert.assertNotNull(getterMethod.get("name"));
     }
 
-    public class Parent {
-        private Long id;
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
+    @Test
+    public void getField() {
+        Field idField = BeanClassUtils.getField(Person.class, "id");
+        Assert.assertNotNull(idField);
     }
 
-    public class Child extends Parent {
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
 }

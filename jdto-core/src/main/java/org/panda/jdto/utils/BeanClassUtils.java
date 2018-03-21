@@ -1,5 +1,6 @@
 package org.panda.jdto.utils;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,12 @@ import java.util.stream.Stream;
  */
 public class BeanClassUtils {
 
+    /**
+     * 获取到所有的getter方法
+     * @param classType
+     * @param <T>
+     * @return
+     */
     public static <T> Map<String, Method> getAllGetterMethod(Class<T> classType) {
         Map<String, Method> getters = new HashMap<>();
         for(Class currentClass = classType;
@@ -26,12 +33,31 @@ public class BeanClassUtils {
         return getters;
     }
 
+    /**
+     * 实例
+     * @param classType
+     * @param <T>
+     * @return
+     */
     public static <T> T createInstance(Class<T> classType) {
         try {
             return classType.newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Field getField(Class classType, String propertyName) {
+
+        for(Class current = classType;
+            current != Object.class;
+            current = current.getSuperclass()) {
+            try {
+                return current.getDeclaredField(propertyName);
+            } catch (NoSuchFieldException e) {
+            }
+        }
+        return (null);
     }
 
     private static boolean isGetterMethod(Method method) {

@@ -1,6 +1,7 @@
 package org.panda.jdto.annotation;
 
 import org.panda.jdto.SinglePropertyMerger;
+import org.panda.jdto.merger.SimpleSinglePropertyMerger;
 
 import java.lang.annotation.*;
 
@@ -9,7 +10,7 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 public @interface Source {
 
     /**
@@ -23,7 +24,7 @@ public @interface Source {
      * 字段merger
      * @return
      */
-    Class<? extends SinglePropertyMerger> merger();
+    Class<? extends SinglePropertyMerger> merger() default SimpleSinglePropertyMerger.class;
 
 
     /**
