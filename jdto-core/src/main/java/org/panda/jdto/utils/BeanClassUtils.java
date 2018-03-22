@@ -68,4 +68,28 @@ public class BeanClassUtils {
         String methodName = method.getName();
         return methodName.substring(3, 4).toLowerCase() + methodName.substring(4);
     }
+
+    public static Object getValue(String property, Object object) {
+        String getterName = "get" + property.substring(0, 1).toUpperCase()
+                + property.substring(1);
+        Class<?> clazz = object.getClass();
+        try {
+            Method method = clazz.getMethod(getterName);
+            return method.invoke(object);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setProperty(String property, Class targetType, Object object, Object value) {
+        String getterName = "set" + property.substring(0, 1).toUpperCase()
+                + property.substring(1);
+        Class<?> clazz = object.getClass();
+        try {
+            Method method = clazz.getMethod(getterName, targetType);
+            method.invoke(object, value);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

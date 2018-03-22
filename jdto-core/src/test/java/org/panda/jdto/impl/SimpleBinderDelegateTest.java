@@ -1,5 +1,6 @@
 package org.panda.jdto.impl;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.panda.jdto.annotation.AnnotationBeanMetaResolver;
@@ -16,6 +17,7 @@ public class SimpleBinderDelegateTest {
     @Before
     public void setUp() {
         simpleBinderDelegate.setBeanMetaResolver(new AnnotationBeanMetaResolver());
+        simpleBinderDelegate.setPropertyMergerManager(new SimplePropertyMergerManager());
     }
 
     @Test
@@ -24,7 +26,9 @@ public class SimpleBinderDelegateTest {
         person.setId(100L);
         person.setFirstName("luo");
         person.setSecondName("libing");
+        person.setName("luolibing");
         PersonView personView = simpleBinderDelegate.bindFromBusinessObject(PersonView.class, person);
-
+        Assert.assertEquals(personView.getId(), person.getId());
+        Assert.assertEquals(personView.getName(), "[哈哈哈] 我是 luolibing");
     }
 }
