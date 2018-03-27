@@ -18,6 +18,8 @@ public class FieldMetaData {
      */
     private List<String> sourceFields;
 
+    private Class[] mergers;
+
     /**
      * 字段的类型
      */
