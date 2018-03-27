@@ -6,9 +6,11 @@ import org.panda.jdto.merger.SimpleSinglePropertyMerger;
 import java.lang.annotation.*;
 
 /**
+ * 多个字段合并到一个
  * Created by luolibing on 2018/3/15.
  */
 @Documented
+@Repeatable(Sources.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 public @interface Source {

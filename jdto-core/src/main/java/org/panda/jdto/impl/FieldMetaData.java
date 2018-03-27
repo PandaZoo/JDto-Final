@@ -1,5 +1,6 @@
 package org.panda.jdto.impl;
 
+import lombok.Builder;
 import lombok.Data;
 import org.panda.jdto.PropertyMerger;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * Created by luolibing on 2018/3/8.
  */
 @Data
+@Builder
 public class FieldMetaData {
 
     /**

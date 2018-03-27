@@ -12,5 +12,5 @@ public class Person extends Base {
 
     private String secondName;
 
-    private String name;
+//    private String name;
 }

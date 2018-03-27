@@ -36,17 +36,28 @@ public class AnnotationBeanMetaResolver extends BaseBeanMetaResolver {
     private void populateMerger(Map<Class, Annotation> annotationMap, FieldMetaData fieldMetaData) {
 
         Source source = (Source) annotationMap.get(Source.class);
-
+        Sources sources = (Sources) annotationMap.get(Sources.class);
         Class<? extends PropertyMerger> merger;
+        if(source != null && sources != null) {
+            throw new RuntimeException("can not have Source and Sources annotation");
+        }
+
+        String[] mergerParam = null;
         // 单个字段的转换
         if(source != null) {
             merger = source.merger();
-            fieldMetaData.setMergerParams(source.mergerParam());
-        } else {
+            mergerParam = source.mergerParam();
+        }
+        else if(sources != null) {
+            merger = sources.merger();
+            mergerParam = sources.mergerParams();
+        }
+        else {
             merger = SimpleSinglePropertyMerger.class;
         }
 
         fieldMetaData.setValueMerger(merger);
+        fieldMetaData.setMergerParams(mergerParam);
     }
 
     private Map<Class, Annotation> readAnnotations(Class classType, Method method, String propertyName) {
@@ -75,7 +86,7 @@ public class AnnotationBeanMetaResolver extends BaseBeanMetaResolver {
     private void populateAnnotations(Map<Class, Annotation> annotationMap, AnnotatedElement element) {
         // TODO 目前先支持一个注解
         populateAnnotation(annotationMap, Source.class, element);
-
+        populateAnnotation(annotationMap, Sources.class, element);
     }
 
 

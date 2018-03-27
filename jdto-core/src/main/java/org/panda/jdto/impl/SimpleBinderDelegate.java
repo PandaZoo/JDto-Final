@@ -88,12 +88,10 @@ public class SimpleBinderDelegate implements DTOBinder {
 
         // source对应的object
         List<String> sourceFields = fieldMetaData.getSourceFields();
-
         return IntStream.range(0, sourceFields.size()).boxed()
                 .map(index -> BeanClassUtils.getValue(
                         sourceFields.get(index), businessObjs[index]))
                 .collect(Collectors.toList());
-
     }
 
     public void setBeanMetaResolver(BaseBeanMetaResolver beanMetaResolver) {

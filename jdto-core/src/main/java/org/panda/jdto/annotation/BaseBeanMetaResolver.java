@@ -17,7 +17,6 @@ import java.util.Map;
 public abstract class BaseBeanMetaResolver {
 
     public final <T> BeanMetaData resolve(Class<T> classType) {
-        BeanMetaData beanMetaData = new BeanMetaData();
         Map<String, Method> getterMethodMap = BeanClassUtils.getAllGetterMethod(classType);
         Map<String, FieldMetaData> fieldMetaDataMap = new HashMap<>();
         getterMethodMap.forEach((p, m) -> {
@@ -25,18 +24,15 @@ public abstract class BaseBeanMetaResolver {
             fieldMetaData.setTargetType(m.getReturnType());
             fieldMetaDataMap.put(p, fieldMetaData);
         });
-        beanMetaData.setFieldMetaDataMap(fieldMetaDataMap);
-        return beanMetaData;
+        return BeanMetaData.builder().fieldMetaDataMap(fieldMetaDataMap).build();
     }
 
     public abstract FieldMetaData buildFieldMetaData(
             String propertyName, Method method, Class classType);
 
     FieldMetaData buildDefaultFieldMetaData(String propertyName) {
-        FieldMetaData fieldMetaData = new FieldMetaData();
         LinkedList<String> sourceFields = Lists.newLinkedList();
         sourceFields.add(propertyName);
-        fieldMetaData.setSourceFields(sourceFields);
-        return fieldMetaData;
+        return FieldMetaData.builder().sourceFields(sourceFields).build();
     }
 }
